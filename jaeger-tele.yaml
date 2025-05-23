@@ -1,0 +1,11 @@
+# telemetry.yaml
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: otel-tracing
+  namespace: istio-system
+spec:
+  tracing:
+  - providers:
+    - name: opentelemetry
+    randomSamplingPercentage: 100.0

@@ -1,0 +1,22 @@
+# tracing-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracing
+  namespace: istio-system
+spec:
+  ports:
+  - name: http-tracing
+    port: 80
+    targetPort: 16686
+  - name: zipkin
+    port: 9411
+    targetPort: 9411
+  - name: jaeger-collector
+    port: 14250
+    targetPort: 14250
+  - name: jaeger-query
+    port: 16685
+    targetPort: 16686
+  selector:
+    app: jaeger  # Must match your Jaeger pod labels
