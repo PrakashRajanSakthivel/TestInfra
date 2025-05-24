@@ -27,11 +27,6 @@ data:
         "Audience": "SmartOrderSystemUsers",
         "SecretKey": "VerySecretKeyForSigningTokens123!"
       },
-       "Elasticsearch": {
-          "Uri": "http://host.docker.internal:9200",
-          "Username": "elastic",
-          "Password": "yourpassword"
-      },
       "Serilog": {
       "Using": ["Serilog.Sinks.Console", "Serilog.Sinks.Elasticsearch"],
       "MinimumLevel": {
@@ -50,7 +45,7 @@ data:
           "Name": "Elasticsearch",
           "Args": {
             "nodeUris": "http://host.docker.internal:9200",
-            "indexFormat": "orderservice-logs-{0:yyyy.MM}",
+            "indexFormat": "orderservice-logs",
             "autoRegisterTemplate": true,
             "batchPostingLimit": 10,          
             "period": 2,                       
@@ -95,7 +90,7 @@ spec:
           memory: "32Mi"
       containers:
         - name: orderservice
-          image: ordersvc:v8 
+          image: ordersvc:latest 
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080       # Ensure app exposes metrics here
@@ -113,7 +108,7 @@ kind: Service
 metadata:
   name: orderservice
   namespace: sd-dev
-  annotations:
+  # annotations:
   #   prometheus.io/scrape: "true" 
   #   prometheus.io/probe: "true"       # Optional: Enable scraping via Service
   #   prometheus.io/port: "8080"        # Matches containerPort
